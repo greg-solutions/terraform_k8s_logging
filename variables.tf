@@ -12,7 +12,7 @@ variable "create_namespace" {
 
 # Volumes
 variable "cloud_type_disk" {
-  description = "Type of disk: aws, gcp, nfs"
+  description = "Type of disk for elasticsearch: aws, gcp, nfs"
   type = string
 }
 variable "path_on_nfs" {
@@ -21,17 +21,16 @@ variable "path_on_nfs" {
   default = "/"
 }
 variable "nfs_endpoint" {
-  description = "Nfs endpoint if you use nfs"
+  description = "Nfs endpoint if you use nfs and for kibana"
   type = string
-  default = ""
 }
 variable "gcp_disk_name" {
-  description = "GCP disk name if you use GCP disk"
+  description = "GCP disk name  for elasticsearch if you use GCP disk"
   type = string
   default = ""
 }
 variable "aws_volume_id" {
-  description = "AWS ebs volume_id if you use AWS disk"
+  description = "AWS ebs volume_id for elasticsearch if you use AWS disk"
   default = ""
 }
 
@@ -158,6 +157,14 @@ variable "elasticsearch_env" {
     {
       name = "bootstrap.memory_lock"
       value = "true"
+    }
+  ]
+}
+variable "elasticsearch_security_context" {
+  description = "Security groups for volume"
+  default = [
+    {
+      fs_group = "0"
     }
   ]
 }

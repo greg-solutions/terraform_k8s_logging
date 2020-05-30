@@ -13,16 +13,17 @@ resource "kubernetes_namespace" "namespace" {
 module "elasticsearch_deploy" {
   source = "git::https://github.com/greg-solutions/terraform_k8s_deploy.git?ref=v1.0.2"
 
-  name            = var.elasticsearch_name
-  namespace       = var.create_namespace ? kubernetes_namespace.namespace[0].id : var.namespace
-  image           = var.elasticsearch_docker_image
-  internal_port   = var.elasticsearch_ports
-  volume_mount    = var.elasticsearch_volume_mount
-  env             = var.elasticsearch_env
-  volume_nfs      = local.volume_nfs
-  volume_aws_disk = local.volume_aws_disk
-  volume_gce_disk = local.volume_gce_disk
-  resources       = var.elasticsearch_resources
+  name             = var.elasticsearch_name
+  namespace        = var.create_namespace ? kubernetes_namespace.namespace[0].id : var.namespace
+  image            = var.elasticsearch_docker_image
+  internal_port    = var.elasticsearch_ports
+  volume_mount     = var.elasticsearch_volume_mount
+  env              = var.elasticsearch_env
+  volume_nfs       = local.volume_nfs
+  volume_aws_disk  = local.volume_aws_disk
+  volume_gce_disk  = local.volume_gce_disk
+  resources        = var.elasticsearch_resources
+  security_context = var.elasticsearch_security_context
 }
 module "elasticsearch_service" {
   source = "git::https://github.com/greg-solutions/terraform_k8s_service.git?ref=v1.0.0"
@@ -42,9 +43,13 @@ module "kibana_deploy" {
   internal_port   = var.kibana_ports
   volume_mount    = var.kibana_volume_mount
   env             = var.kibana_env
-  volume_nfs      = local.volume_nfs
-  volume_aws_disk = local.volume_aws_disk
-  volume_gce_disk = local.volume_gce_disk
+  volume_nfs      = [
+    {
+      path_on_nfs  = var.path_on_nfs
+      nfs_endpoint = var.nfs_endpoint
+      volume_name  = "volume"
+    }
+  ]
   resources       = var.kibana_resources
 }
 module "kibana_service" {
