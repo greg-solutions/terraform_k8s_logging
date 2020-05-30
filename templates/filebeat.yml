@@ -1,0 +1,32 @@
+filebeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false
+
+filebeat.inputs:
+  - type: docker
+    containers.ids: '*'
+    exclude_files: ['\.gz$']
+    processors:
+      - add_docker_metadata: ~
+      - add_kubernetes_metadata:
+          in_cluster: true
+          host: ${NODE_NAME}
+          matchers:
+            - logs_path:
+                logs_path: "/var/log/containers/"
+      - drop_event:
+          when:
+            or:
+              - equals:
+                  kubernetes.labels.filebeat_logs: false
+
+
+processors:
+  - add_cloud_metadata:
+
+
+output.elasticsearch:
+  hosts: '${ELASTICSEARCH_HOSTS:elasticsearch:9200}'
+  username: '${ELASTICSEARCH_USERNAME:}'
+  password: '${ELASTICSEARCH_PASSWORD:}'
