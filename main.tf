@@ -11,7 +11,7 @@ resource "kubernetes_namespace" "namespace" {
 
 # ElasticSearch
 module "elasticsearch_deploy" {
-  source = "git::https://github.com/greg-solutions/terraform_k8s_deploy.git?ref=v1.0.2"
+  source = "git::https://github.com/greg-solutions/terraform_k8s_statefulset.git?ref=v1.1.0"
 
   name             = var.elasticsearch_name
   namespace        = var.create_namespace ? kubernetes_namespace.namespace[0].id : var.namespace
