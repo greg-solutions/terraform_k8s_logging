@@ -128,6 +128,11 @@ variable "elasticsearch_resources" {
     }
   ]
 }
+variable "elasticsearch_node_selector" {
+  description = "Define Node where elastic must working"
+  default = null
+  type = map(string)
+}
 variable "elasticsearch_docker_image" {
   description = "Docker image. Not recommend to change"
   type = string
