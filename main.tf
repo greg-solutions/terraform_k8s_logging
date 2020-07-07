@@ -61,7 +61,7 @@ module "kibana_service" {
   port_mapping  = var.kibana_ports
 }
 module "kibana_ingress" {
-  source = "git::https://github.com/greg-solutions/terraform_k8s_ingress.git?ref=v1.0.0"
+  source = "git::https://github.com/greg-solutions/terraform_k8s_ingress.git?ref=v1.0.1"
   app_name = var.kibana_name
   app_namespace = var.create_namespace ? kubernetes_namespace.namespace[0].id : var.namespace
   domain_name = var.domain
@@ -72,6 +72,7 @@ module "kibana_ingress" {
     }
   ]
   tls = var.tls
+  tls_hosts = var.tls_hosts
   annotations = var.ingress_annotations
 }
 

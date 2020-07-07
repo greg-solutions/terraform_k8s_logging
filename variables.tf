@@ -44,6 +44,10 @@ variable "tls" {
   type = list(string)
   default = []
 }
+variable "tls_hosts" {
+  description = "TLS for kibana url with host"
+  default = []
+}
 variable "ingress_annotations" {
   description = "Additional ingress annotations for kibana"
   default = null
