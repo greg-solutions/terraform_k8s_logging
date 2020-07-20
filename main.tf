@@ -36,7 +36,7 @@ module "elasticsearch_service" {
 
 # Kibana
 module "kibana_deploy" {
-  source = "git::https://github.com/greg-solutions/terraform_k8s_deploy.git?ref=v1.0.2"
+  source = "git::https://github.com/greg-solutions/terraform_k8s_deploy.git?ref=v1.0.3"
 
   name            = var.kibana_name
   namespace       = var.create_namespace ? kubernetes_namespace.namespace[0].id : var.namespace
@@ -44,6 +44,7 @@ module "kibana_deploy" {
   internal_port   = var.kibana_ports
   volume_mount    = var.kibana_volume_mount
   env             = var.kibana_env
+  node_selector   = var.kibana_node_selector
   volume_nfs      = [
     {
       path_on_nfs  = var.path_on_nfs

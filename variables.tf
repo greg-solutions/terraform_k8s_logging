@@ -99,6 +99,11 @@ variable "kibana_env" {
   description = "Environment variables"
   default = []
 }
+variable "kibana_node_selector" {
+  description = "Define Node where kibana must working"
+  default = null
+  type = map(string)
+}
 
 # ElasticSearch
 variable "elasticsearch_name" {
