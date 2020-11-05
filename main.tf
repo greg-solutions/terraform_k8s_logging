@@ -80,7 +80,7 @@ module "kibana_ingress" {
 # Filebeat
 
 module "filebeat_deploy" {
-  source = "git::https://github.com/greg-solutions/terraform_k8s_daemonset.git?ref=v1.0.1"
+  source = "git::https://github.com/greg-solutions/terraform_k8s_daemonset.git?ref=v1.1.1"
 
   name                  = var.filebeat_name
   namespace             = var.namespace
