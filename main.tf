@@ -32,6 +32,8 @@ module "elasticsearch_service" {
   app_name      = var.elasticsearch_name
   app_namespace = var.create_namespace ? kubernetes_namespace.namespace[0].id : var.namespace
   port_mapping  = var.elasticsearch_ports
+  type          = var.elasticsearch_service_type
+  annotations   = var.elasticsearch_service_annotation
 }
 
 # Kibana

@@ -182,6 +182,14 @@ variable "elasticsearch_security_context" {
     }
   ]
 }
+variable "elasticsearch_service_type" {
+  description = "Elasticsearch service type"
+  default = "ClusterIP"
+}
+variable "elasticsearch_service_annotation" {
+  description = "Annotation for elasticsearch service (if used type 'LoadBalancer')"
+  default = null
+}
 
 # Filebeat
 variable "filebeat_name" {
