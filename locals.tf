@@ -18,4 +18,24 @@ locals {
       volume_name = "volume"
     }
   ] : []
+
+  elastic_env_secret = [
+    {
+      name        = "ELASTIC_PASSWORD"
+      secret_name = kubernetes_secret.elastic_secrets.metadata[0].name
+      secret_key  = "elastic_password"
+  }]
+
+  kibana_env_secret = [
+    {
+      name        = "ELASTICSEARCH_USERNAME"
+      secret_name = kubernetes_secret.kibana_secrets.metadata[0].name
+      secret_key  = "elastic_username"
+    },
+    {
+      name        = "ELASTICSEARCH_PASSWORD"
+      secret_name = kubernetes_secret.kibana_secrets.metadata[0].name
+      secret_key  = "elastic_password"
+    },
+  ]
 }

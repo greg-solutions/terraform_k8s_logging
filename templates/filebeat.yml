@@ -1,6 +1,14 @@
+setup:
+  template.overwrite: true
+  ilm.rollover_alias: "${ELASTIC_INDEX_PREFIX}"
+  ilm.enabled: true
+  ilm.pattern: "{now/d{yyyy-MM-dd}}-000001"
+  ilm.policy_name: ${ELASTIC_INDEX_PREFIX}_ilm_policy
+  ilm.policy_file: /usr/share/filebeat/filebeat_ilm_policy.json
+
 filebeat.config:
   modules:
-    path: ${path.config}/modules.d/*.yml
+    path: $${path.config}/modules.d/*.yml
     reload.enabled: false
 
 filebeat.inputs:
@@ -11,22 +19,20 @@ filebeat.inputs:
       - add_docker_metadata: ~
       - add_kubernetes_metadata:
           in_cluster: true
-          host: ${NODE_NAME}
+          host: $${NODE_NAME}
           matchers:
             - logs_path:
-                logs_path: "/var/log/containers/"
+                logs_path: "/var/lib/docker/containers/"
       - drop_event:
           when:
             or:
               - equals:
                   kubernetes.labels.filebeat_logs: false
 
-
 processors:
   - add_cloud_metadata:
 
-
 output.elasticsearch:
-  hosts: '${ELASTICSEARCH_HOSTS:elasticsearch:9200}'
-  username: '${ELASTICSEARCH_USERNAME:}'
-  password: '${ELASTICSEARCH_PASSWORD:}'
+  hosts: '${ELASTIC_HOST_NAME}:${ELASTIC_PORT}'
+  username: '${ELASTICSEARCH_USERNAME}'
+  password: '${ELASTICSEARCH_PASSWORD}'

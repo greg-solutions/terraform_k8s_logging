@@ -12,7 +12,7 @@ resource "kubernetes_cluster_role" "filebeat_role" {
   count = var.filebeat_rbac_enabled ? 1 : 0
 
   metadata {
-    name       = var.filebeat_name
+    name = var.filebeat_name
   }
   rule {
     api_groups = [""]
@@ -30,7 +30,7 @@ resource "kubernetes_cluster_role_binding" "filebeat_role_binding" {
   count = var.filebeat_rbac_enabled ? 1 : 0
 
   metadata {
-    name      = "${var.filebeat_name}-viewer"
+    name = "${var.filebeat_name}-viewer"
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
