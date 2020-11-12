@@ -66,6 +66,7 @@ module "kibana_deploy" {
   ]
   resources = var.kibana_resources
 }
+
 module "kibana_service" {
   source = "git::https://github.com/greg-solutions/terraform_k8s_service.git?ref=v1.0.0"
 
@@ -73,6 +74,7 @@ module "kibana_service" {
   app_namespace = var.create_namespace ? kubernetes_namespace.namespace[0].id : var.namespace
   port_mapping  = var.kibana_ports
 }
+
 module "kibana_ingress" {
   source        = "git::https://github.com/greg-solutions/terraform_k8s_ingress.git?ref=v1.0.2"
   app_name      = var.kibana_name
@@ -90,7 +92,6 @@ module "kibana_ingress" {
 }
 
 # Filebeat
-
 module "filebeat_deploy" {
   source = "git::https://github.com/greg-solutions/terraform_k8s_daemonset.git?ref=v1.1.1"
 
