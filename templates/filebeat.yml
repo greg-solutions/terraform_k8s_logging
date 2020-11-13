@@ -3,7 +3,7 @@ setup:
   ilm.rollover_alias: "${ELASTIC_INDEX_PREFIX}"
   ilm.enabled: true
   ilm.pattern: "{now/d{yyyy-MM-dd}}-000001"
-  ilm.policy_name: ${ELASTIC_INDEX_PREFIX}_ilm_policy
+  ilm.policy_name: ${ELASTIC_INDEX_PREFIX}-ilm-policy
   ilm.policy_file: /usr/share/filebeat/filebeat_ilm_policy.json
 
 filebeat.config:
