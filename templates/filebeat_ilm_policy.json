@@ -1,25 +1,41 @@
 {
   "policy": {
     "phases": {
+      %{ if HOT_PHASE_ENABLED }
       "hot": {
-        "min_age": "0ms",
+        "min_age": "${HOT_PHASE_MIN_AGE}",
         "actions": {
           "rollover": {
-            "max_age": "10d",
-            "max_size": "5gb"
+            "max_age": "${HOT_PHASE_MAX_AGE}",
+            "max_size": "${HOT_PHASE_MAX_SIZE}"
           }
         }
       },
+      %{ endif }
+      %{ if WARM_PHASE_ENABLED }
+      "warm": {
+        "min_age": "${WARM_PHASE_MIN_AGE}",
+        "actions": {
+          "set_priority": {
+            "priority": null
+          }
+        }
+      },
+      %{ endif }
+      %{ if COLD_PHASE_ENABLED }
       "cold": {
-        "min_age": "1m",
+        "min_age": "${COLD_PHASE_MIN_AGE}",
         "actions": {}
       },
+      %{ endif }
+      %{ if DELETE_PHASE_ENABLED }
       "delete": {
-        "min_age": "60d",
+        "min_age": "${DELETE_PHASE_MIN_AGE}",
         "actions": {
           "delete": {}
         }
       }
+      %{ endif }
     }
   }
 }

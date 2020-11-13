@@ -127,7 +127,7 @@ resource "kubernetes_config_map" "filebeat_config" {
   }
   data = {
     "filebeat.yml"             = var.filebeat_custom_config == null ? data.template_file.filebeat_config.rendered : var.filebeat_custom_config,
-    "filebeat_ilm_policy.json" = var.filebeat_custom_ilm_policy == null ? file("${path.module}/templates/filebeat_ilm_policy.json") : var.filebeat_custom_ilm_policy
+    "filebeat_ilm_policy.json" = var.filebeat_custom_ilm_policy == null ? data.template_file.filebeat_ilm_policy.rendered : var.filebeat_custom_ilm_policy
   }
 }
 
@@ -140,6 +140,23 @@ data "template_file" "filebeat_config" {
     ELASTIC_INDEX_PREFIX   = var.elasticsearch_index_prefix,
     ELASTIC_HOST_NAME      = var.elasticsearch_name,
     ELASTIC_PORT           = lookup(var.elasticsearch_ports[0], "external_port")
+  }
+}
+
+data "template_file" "filebeat_ilm_policy" {
+  template = file("${path.module}/templates/filebeat_ilm_policy.json")
+
+  vars = {
+    HOT_PHASE_ENABLED    = var.filebeat_ilm_settings.hot_phase.enabled
+    HOT_PHASE_MIN_AGE    = var.filebeat_ilm_settings.hot_phase.min_age,
+    HOT_PHASE_MAX_AGE    = var.filebeat_ilm_settings.hot_phase.rollover_max_age,
+    HOT_PHASE_MAX_SIZE   = var.filebeat_ilm_settings.hot_phase.rollover_max_size,
+    WARM_PHASE_ENABLED   = var.filebeat_ilm_settings.warm_phase.enabled,
+    WARM_PHASE_MIN_AGE   = var.filebeat_ilm_settings.warm_phase.min_age,
+    COLD_PHASE_ENABLED   = var.filebeat_ilm_settings.cold_phase.enabled,
+    COLD_PHASE_MIN_AGE   = var.filebeat_ilm_settings.cold_phase.min_age,
+    DELETE_PHASE_ENABLED = var.filebeat_ilm_settings.delete_phase.enabled,
+    DELETE_PHASE_MIN_AGE = var.filebeat_ilm_settings.delete_phase.min_age,
   }
 }
 
