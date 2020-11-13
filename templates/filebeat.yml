@@ -5,6 +5,7 @@ setup:
   ilm.pattern: "{now/d{yyyy-MM-dd}}-000001"
   ilm.policy_name: ${ELASTIC_INDEX_PREFIX}-ilm-policy
   ilm.policy_file: /usr/share/filebeat/filebeat_ilm_policy.json
+  ilm.overwrite: true
 
 filebeat.config:
   modules:
