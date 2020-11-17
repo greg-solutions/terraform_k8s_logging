@@ -188,12 +188,14 @@ data "template_file" "kibana_user_provision_script" {
 
 # kibana readonly user password
 resource "random_password" "kibana_readonly_password" {
-  length           = 16
+  length  = 16
+  special = false
 }
 
 # kibana admin user password
 resource "random_password" "kibana_admin_password" {
-  length           = 16
+  length  = 16
+  special = false
 }
 
 resource "kubernetes_secret" "elastic_secrets" {
