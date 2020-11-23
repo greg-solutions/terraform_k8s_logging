@@ -334,10 +334,10 @@ variable "filebeat_ilm_settings" {
   description = "Elasticsearch ILM settings for filebeat index. See details on the elastic site: https://www.elastic.co/guide/en/elasticsearch/reference/7.9/ilm-actions.html"
   type = object({
     hot_phase = object({
-      enabled = bool,
-      min_age = string,
+      enabled           = bool,
+      min_age           = string,
       rollover_max_size = string,
-      rollover_max_age = string
+      rollover_max_age  = string
     }),
     warm_phase = object({
       enabled = bool,
@@ -355,10 +355,10 @@ variable "filebeat_ilm_settings" {
 
   default = {
     hot_phase = {
-      enabled = true,
-      min_age = "0ms",
+      enabled           = true,
+      min_age           = "0ms",
       rollover_max_size = "2gb",
-      rollover_max_age = "7d"
+      rollover_max_age  = "7d"
     }
     warm_phase = {
       enabled = true,
