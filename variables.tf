@@ -83,10 +83,10 @@ variable "kibana_resources" {
   description = "Resources limit/requests"
   default = [
     {
-      request_cpu    = "300m"
-      request_memory = "500Mi"
+      request_cpu    = "100m"
+      request_memory = "650Mi"
       limit_cpu      = "1000m"
-      limit_memory   = "1000Mi"
+      limit_memory   = "1200Mi"
     }
   ]
 }
@@ -141,9 +141,9 @@ variable "elasticsearch_resources" {
   default = [
     {
       request_cpu    = "100m"
-      request_memory = "500Mi"
+      request_memory = "750Mi"
       limit_cpu      = "1000m"
-      limit_memory   = "1000Mi"
+      limit_memory   = "1200Mi"
     }
   ]
 }
