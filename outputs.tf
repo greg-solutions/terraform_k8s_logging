@@ -7,6 +7,9 @@ output "kibana_url" {
 output "elasticsearch_lb_endpoint" {
   value = var.elasticsearch_service_type == "LoadBalancer" ? module.elasticsearch_service.load_balancer_ingress_hostname : null
 }
+output "elasticsearch_internal_endpoint" {
+  value = "${var.elasticsearch_name}.${var.namespace}.svc.cluster.local"
+}
 output "elastic_username" {
   value = var.elasticsearch_username
 }
