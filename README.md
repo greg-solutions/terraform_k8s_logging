@@ -1,6 +1,9 @@
 # Terraform kuberntes module for logging all pods in cluster
-
 ## Filebeat + Elasticsearch + Kibana
+
+# Note:
+
+After apply check output module.logging.kibana_users_provision_script and run it inside elasticsearch pod.
 
 ### Elasticsearch can work with volumes type: NFS, AWS EBS, GCP PD.
 ### Kibana work with NFS only
