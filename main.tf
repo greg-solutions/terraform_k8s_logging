@@ -11,7 +11,7 @@ resource "kubernetes_namespace" "namespace" {
 
 # ElasticSearch
 module "elasticsearch_deploy" {
-  source = "git::https://github.com/greg-solutions/terraform_k8s_statefulset.git?ref=v1.1.4"
+  source = "git::https://github.com/greg-solutions/terraform_k8s_statefulset.git?ref=v1.1.5"
 
   name             = var.elasticsearch_name
   namespace        = var.create_namespace ? kubernetes_namespace.namespace[0].id : var.namespace
@@ -27,7 +27,7 @@ module "elasticsearch_deploy" {
   node_selector    = var.elasticsearch_node_selector
 }
 module "elasticsearch_service" {
-  source = "git::https://github.com/greg-solutions/terraform_k8s_service.git?ref=v1.0.0"
+  source = "git::https://github.com/greg-solutions/terraform_k8s_service.git?ref=v1.0.1"
 
   app_name      = var.elasticsearch_name
   app_namespace = var.create_namespace ? kubernetes_namespace.namespace[0].id : var.namespace
@@ -57,7 +57,7 @@ module "kibana_deploy" {
   resources       = var.kibana_resources
 }
 module "kibana_service" {
-  source = "git::https://github.com/greg-solutions/terraform_k8s_service.git?ref=v1.0.0"
+  source = "git::https://github.com/greg-solutions/terraform_k8s_service.git?ref=v1.0.1"
 
   app_name      = var.kibana_name
   app_namespace = var.create_namespace ? kubernetes_namespace.namespace[0].id : var.namespace
@@ -115,6 +115,6 @@ resource "kubernetes_config_map" "filebeat_config" {
     namespace = var.namespace
   }
   data = {
-    "filebeat.yml" = var.filebeat_custom_config == null ? "${file("${path.module}/templates/filebeat.yml")}" : var.filebeat_custom_config
+    "filebeat.yml" = var.filebeat_custom_config == null ? file("${path.module}/templates/filebeat.yml") : var.filebeat_custom_config
   }
 }
